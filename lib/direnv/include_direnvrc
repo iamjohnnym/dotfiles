@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# set -euo pipefail
+
+# -- Include all direnvrc found
+echo -n "direnv: "
+source_type "direnvrc"

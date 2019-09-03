@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+printf "\tbash aliases\n"
+
+# -- Unix ----------------------------------------------------------------------
+alias b..='cd ..'
+alias b...='cd ../..'
+alias h='cd ~'
+alias x='exit'
+alias mkdir='mkdir -p'
+alias vim='vim -p'
+alias grep='grep --color=always'
+alias ll='ls -haltr'
+alias ff='find . -type f -name'
+alias fh='find ~ -type f -name'
+alias fr='find / -type f -name'
+alias updatedb='sudo /usr/libexec/locate.updatedb'
+alias whereami='curl ifconfig.co'
+alias 'netstat.osx'='echo "Proto Recv-Q Send-Q  Local Address          Foreign Address        (state)" && netstat -an | grep LISTEN'

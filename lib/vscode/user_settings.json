@@ -1,0 +1,67 @@
+{
+    "docker.enableLinting": true,
+    "editor.fontFamily": "'Courier New', monospace",
+    "editor.tabCompletion": "on",
+    "editor.minimap.maxColumn": 80,
+    "editor.rulers": [80,120],
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#ff4081"
+    },
+    "workbench.startupEditor": "none",
+    "workbench.colorTheme": "Default Dark+",
+    "window.restoreFullscreen": true,
+    "markdown.preview.fontFamily": "'Courier New', monospace",
+    "terminal.external.osxExec": "iTerm.app",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.scrollback": 5000,
+    // Python
+    "python.testing.pytestEnabled": false,
+    "python.testing.pytestArgs": [
+        "-v",
+        "--cov"
+    ],
+    "python.linting.pylintArgs": [
+        "--disable=C0111"
+    ],
+    "python.linting.banditPath": "bandit",
+    "python.linting.banditEnabled": true,
+    "python.linting.flake8Path": "flake8",
+    "python.linting.flake8Enabled": true,
+    "python.testing.unittestEnabled": true,
+    "python.testing.unittestArgs": [
+        "-vvv",
+        "-s",
+        ".",
+        "-p",
+        "*test*.py"
+    ],
+    "python.linting.enabled": true,
+    "python.pythonPath": ".venv/bin/python",
+    "python.terminal.activateEnvironment": false,
+    "git.enabled": true,
+    "git.confirmSync": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "explorer.confirmDelete": false,
+    "go.autocompleteUnimportedPackages": true,
+    "go.inferGopath": true,
+    "go.gocodeAutoBuild": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.autoSave": "onFocusChange",
+    "files.associations": {
+        ".envrc": "shellscript",
+        "_bashrc": "shellscript",
+        "*_aliases": "shellscript",
+        "_direnvrc": "shellscript",
+        "bash_profile": "shellscript"
+    },
+    "vim.disableAnnoyingNeovimMessage": true
+    //"python.venvPath": "./.venv",
+    //"python.venvFolders": [
+    //    "envs",
+    //    ".pyenv",
+    //    ".direnv",
+    //    "./venv"
+    //],
+    //"python.envFile": "${workspaceFolder}/.envrc"
+}

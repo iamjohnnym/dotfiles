@@ -1,0 +1,7 @@
+Include config.d/*
+
+# Github Account
+Host github.com
+	HostName github.com
+	User git
+	IdentityFile ~/.ssh/git_iamjohnnym

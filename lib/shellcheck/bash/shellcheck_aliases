@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+printf "\tshellcheck aliases\n"
+
+# -- shellcheck ----------------------------------------------------------------
+alias shellcheck.dotfiles='shell_files_shellcheck'

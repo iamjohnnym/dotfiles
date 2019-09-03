@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+printf "\tdirenv bashrc\n"
+
+# load direnv shell environment
+export PATH="$HOME/.direnv/bin:$PATH"
+if command -v direnv 1>/dev/null 2>&1; then
+  eval "$(direnv hook bash)"
+fi

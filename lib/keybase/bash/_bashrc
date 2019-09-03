@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+printf "\tkeybase bashrc\n"
+
+test -d ~/.tmp/keybase || mkdir -p ~/.tmp/keybase
+
+function keybase_import_pgp() {
+  keybase login
+
+  echo -n "Keybase: Importing ${KEYBASE_KEY}..."
+  # Exporting your Keybase public key and import your locally
+  keybase pgp export -q "$KEYBASE_KEY" | gpg -q --import
+  # Exporting your Keybase private key and import your locally
+  keybase pgp export -q "$KEYBASE_KEY" -s --unencrypted | \
+    gpg -q --allow-secret-key-import --import
+  echo "Done"
+}
+
+function keybase_generate_sshkey() {
+  LABEL="$1"
+  KEY_NAME="$2"
+
+  # Get the key name when only one exists.
+  ENC_KEY=$(gpg --list-keys --keyid-format SHORT | \
+    /usr/bin/grep '^pub' | \
+    perl -pe 's|^pub\s+[a-z]+[0-9]+\/([a-zA-z0-9]+)\s.*|\1|')
+  echo "$ENC_KEY"
+
+  # Generate the RSA private key using the hexadecimal hash
+  # The private key will be saved in the id_rsa file
+  gpg --export-secret-key "$ENC_KEY" | openpgp2ssh "$ENC_KEY" > ~/.ssh/"$KEY_NAME"
+  chmod 400 ~/.ssh/"$KEY_NAME"
+
+  # Generate the public RSA key file
+  ssh-keygen -y -b 4096 -f ~/.ssh/"$KEY_NAME" -C "$LABEL" > ~/.ssh/"${KEY_NAME}.pub"
+
+  # Remove all the temporary files
+  rm ~/.tmp/keybase/*.key
+}

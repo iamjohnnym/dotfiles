@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+printf "\tloading .direnvrc rbenv\n"
+
+# shellcheck disable=2154,2143
+function load_ruby() (
+  # load rbenv shell environment
+  init_shell_environemnt rbenv
+  # validate that rbenv is installed and visible in ${PATH}
+  if [ ! "$(command -v rbenv)" ]; then
+    echo "You need to install 'rbenv' before you can proceed"
+    exit 1
+  fi
+  # Add .gems to
+  if [ ! -f '.rbenv-gemsets' ]; then
+    touch .rbenv-gemsets
+  fi
+  test "$(grep -Fx '.gems' .rbenv-gemsets)" || echo '.gems' >>.rbenv-gemsets
+  # check if ruby version is set in current dir
+  if [ -f '.ruby-version' ]; then
+    # Check if Gemfile.lock file exists and move it to a backup, allowing for a
+    # fresh install.
+    # NOTE:  Don't be silly, this should be arg driven because this isn't always
+    #        a desired situation.
+    test -f Gemfile.lock && mv Gemfile.lock{,.bak-"$_now"}
+    # ensure the ruby version is installed, if not, install it and
+    # rbenv-gemset this stuff
+    if ! rbenv versions | grep -q "$(cat .ruby-version)" ; then
+      echo -n 'Ruby version not found, installing '
+      cat .ruby-version
+      rbenv install "$(cat .ruby-version)"
+      # rehash rbenv due to new install
+      rbenv rehash
+      # initial rbenv
+      eval "$(rbenv init -)"
+      echo 'installing bundler to latest'
+      rbenv shell "$(cat .ruby-version)"
+      gem install bundler
+    fi
+  fi
+  if [ ! "$DISABLE_VENV_BOOTSTRAP" ]; then
+    if [ ! -d '.gems' ]; then
+      echo -n 'Installing rbenv-gemsets for '
+      rbenv version
+      gem install bundler
+    fi
+  fi
+  echo -n 'Loading ruby env for '
+  rbenv versions
+)
+
+if [ ! "$DISABLE_BOOTSTRAP" ] ; then
+  load_ruby
+fi

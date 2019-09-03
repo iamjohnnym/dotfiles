@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# set -euo pipefail
+
+# load pyenv shell environment
+function init_shell_environemnt() {
+  # Overly opinionated function on what a path looks like.
+  PROG="$1"
+  export PATH="${HOME}/.${PROG}/bin:${PATH}"
+  if command -v "$PROG" 1>/dev/null 2>&1; then
+    eval "$(${PROG} init -)"
+  fi
+}
+
+# shellcheck disable=2068
+function source_dotfile() {
+  ARRAY=("$@")
+  for ITEM in ${ARRAY[@]}; do
+    # shellcheck source=/dev/null
+    source "$ITEM"
+  done
+}
+
+function source_type() {
+  TYPE=$1
+  if [ -n "$DOTFILE_PATH" ]; then
+    echo "Sourcing ${TYPE} enviornment files..."
+    ARRAY=("$(find "${DOTFILE_PATH}" -type f -name "*_${TYPE}" ! -path "*include_${TYPE}")")
+    source_dotfile "${ARRAY[@]}"
+  else
+    echo "'DOTFILE_PATH' not set, dotfile ${TYPE} not included."
+  fi
+}
+
+# https://explainshell.com/explain?$(urlencode "cmd=$(command -v whoami)")
+# shellcheck disable=1083
+function urlencode() {
+  local data
+  if [[ $# != 1 ]]; then
+    echo "Usage: $0 string-to-urlencode"
+    return 1
+  fi
+  data="$(curl -s -o /dev/null -w %{url_effective} --get --data-urlencode "$1" "")"
+  if [[ $? != 3 ]]; then
+    echo "Unexpected error" 1>&2
+    return 2
+  fi
+  echo "${data##/?}"
+  return 0
+}
+

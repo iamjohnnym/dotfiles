@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+function shell_files_shellcheck() {
+  find . -type f \
+    \( -name '*rc' -o \
+       -name '*profile' -o \
+       -name '*.sh' -o \
+       -name '*aliases' \) \
+    -exec 'shellcheck' '-f' 'gcc' {} \;
+}

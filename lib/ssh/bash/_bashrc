@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+printf "\tbash bashrc\n"
+
+test -d ~/.ssh/config.d || mkdir -p ~/.ssh/config.d
+
+if ! grep -Fxq "Include config.d/*" ~/.ssh/config
+then
+    echo "Include config.d/*" >> ~/.ssh/config
+fi
+if ! grep -Fxq "Include ${DOTFILE_PATH}/config.d/*" ~/.ssh/config
+then
+    echo "Include ${DOTFILE_PATH}/config.d/*" >> ~/.ssh/config
+fi

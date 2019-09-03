@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+printf "\tdocker bashrc\n"
+
+function docker_stop_all() {
+  docker ps -qa | xargs docker rm -f
+}
+
+function docker_stop_container() {
+  docker ps -a | \
+  grep "$1" | \
+  awk "{print ${1}}" | \
+  xargs docker rm -f;
+}
+
+function docker_remove_images_all() {
+  docker images | \
+  awk "{print ${3}}" | \
+  grep -v IMAGE | \
+  xargs docker rmi --force;
+}
+
+function docker_remove_image() {
+  docker images | \
+  grep "$1" | \
+  awk "{print ${3}}" | \
+  grep -v IMAGE | \
+  xargs docker rmi -f;
+}

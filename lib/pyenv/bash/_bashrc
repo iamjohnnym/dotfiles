@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+printf "\tpyenv bashrc\n"
+
+# load pyenv shell environment
+init_shell_environemnt "pyenv"

@@ -1,0 +1,22 @@
+# Mac OS generated files
+.DS_Store
+.Trashes
+.Spotlight-V100
+
+# Sublime Files
+*.sublime-*
+.settings
+.project
+
+# Vim Files
+*.swp
+*.swo
+*.un~
+.netrwhist
+.tern-port
+
+# WebStorm Files
+*.idea
+
+# Npm
+npm-debug.log

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+printf "\taws-vault bashrc\n"
+
+export AWS_VAULT_BACKEND=pass

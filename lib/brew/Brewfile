@@ -1,0 +1,119 @@
+tap "chef/chef"
+tap "heroku/brew"
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
+tap "homebrew/services"
+tap "mas-cli/tap"
+tap "wata727/tflint"
+
+# Install mas-cli, Mac Apple Store CLI to manage our installed apps
+# https://github.com/mas-cli/mas
+
+brew "mas"
+
+# Install apple store apps
+
+mas "Alfred", id: 405843582
+mas "Chatty", id: 1031444301
+mas "LastPass", id: 926036361
+mas "Magnet", id: 441258766
+mas "Skitch", id: 425955336
+mas "SnippetsLab", id: 1006087419
+mas "Xcode", id: 497799835
+
+# Base Libs
+
+brew "automake"
+brew "zlib"
+
+# Base Requirements
+
+## shell completion scripts
+
+brew "bash-completion"
+
+## Networking
+
+brew "nmap"
+brew "socat"
+brew "telnet"
+# cask "viscosity"
+
+## System
+
+brew "htop"
+brew "jq"
+brew "tree"
+brew "wget"
+
+# Environment Apps
+
+brew "direnv"
+brew "elvish"
+brew "pyenv"
+brew "rbenv"
+
+# Encryption
+
+cask "aws-vault"
+brew "gnupg"
+brew "lastpass-cli"
+cask "keybase"
+brew "monkeysphere"
+brew "pass"
+brew "wifi-password"
+
+# Virtualization
+
+brew "docker"
+brew "docker-machine-driver-xhyve"
+brew "kubernetes-cli"
+cask "minikube"
+cask "vagrant"
+cask "vagrant-manager"
+cask "virtualbox"
+cask "virtualbox-extension-pack"
+
+# Databases
+
+brew "postgresql"
+brew "sqlite"
+
+# Development Related
+
+cask "chef/chef/chef-workstation"
+brew "bench"
+brew "hadolint"
+brew "heroku/brew/heroku"
+brew "packer"
+brew "terraform"
+brew "tflint"
+brew "m-cli"
+brew "ghq"
+
+# Cloud Drives
+
+cask "dropbox"
+cask "google-backup-and-sync"
+
+# Unsorted
+
+brew "bower"
+cask "chromedriver"
+brew "dep"
+brew "gawk"
+brew "geckodriver"
+brew "graphviz"
+cask "gimp"
+brew "homebrew/cask-versions/firefox-developer-edition"
+cask "java"
+cask "meld"
+cask "postman"
+brew "tiger-vnc"
+cask "tigervnc-viewer"
+cask "vnc-viewer"
+brew 'vim'
+cask "x2goclient"
+cask "xquartz"

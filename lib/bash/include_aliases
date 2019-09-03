@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# set -euo pipefail
+
+# -- Include all aliases found
+source_type "aliases"

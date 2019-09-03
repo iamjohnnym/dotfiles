@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+printf "\tbash profile\n"
+
+# set -x
+
+# .bash_profile
+export BASH_CONF="bash_profile"
+
+# Set Lang
+export LANG="en_US.UTF-8"
+
+# Source bashrc
+if [ -f "/Users/$(whoami)/.bashrc" ]; then
+  # shellcheck source=/dev/null
+  source "/Users/$(whoami)/.bashrc"
+fi
+
+# Set Bash History Timestamp
+export HISTTIMEFORMAT="%d/%m/%y %T "
+
+# Set variable for RAM usage, used in $PS1
+if [ "$(uname -a | awk -F' ' '{print $1}')" == 'Darwin' ]; then
+  aram() {
+    top -l 1 -s 0 | grep PhysMem | sed 's/, /\n         /g' | awk -F' ' '{print $2}'
+  }
+else
+  aram() {
+    free -m | awk '{print $4}' | head -2 | tail -1
+  }
+fi
+
+# Configure PS1
+export PS1='\[\033[0;33m\]\t $(aram) \[\033[0;32m\][\u@\h \W]$ \[\033[0;37m\]'
+
+# Source bash aliases
+if [ -f "/Users/$(whoami)/.bash_aliases" ]; then
+  # shellcheck source=/dev/null
+  source "/Users/$(whoami)/.bash_aliases"
+fi
+
+# Binds
+
+bind 'set show-all-if-ambiguous on'
+bind 'set completion-ignore-case on'
+bind 'set visible-stats on'
+bind 'set page-completions on'

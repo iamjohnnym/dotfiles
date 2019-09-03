@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+printf "\tvscode aliases\n"
+
+alias vscode.install_plugins='cat ${DOTFILE_PATH}/lib/vscode/extensions.list | xargs -L 1 echo code --install-extension'

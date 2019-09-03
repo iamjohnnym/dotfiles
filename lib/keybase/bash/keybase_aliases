@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+printf "\tkeybase aliases\n"
+
+# -- Keybase -------------------------------------------------------------------
+alias 'keybase.keygen'='keybase_generate_sshkey'
