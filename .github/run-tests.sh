@@ -7,3 +7,4 @@ shellcheck
 
 # Run shellcheck through Makefile
 make shellcheck
+echo "$?"
