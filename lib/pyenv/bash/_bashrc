@@ -2,4 +2,4 @@
 printf "\tpyenv bashrc\n"
 
 # load pyenv shell environment
-init_shell_environemnt "pyenv"
+init_shell_environment "pyenv"

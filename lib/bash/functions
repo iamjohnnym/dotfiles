@@ -2,7 +2,7 @@
 # set -euo pipefail
 
 # load pyenv shell environment
-function init_shell_environemnt() {
+function init_shell_environment() {
   # Overly opinionated function on what a path looks like.
   PROG="$1"
   export PATH="${HOME}/.${PROG}/bin:${PATH}"

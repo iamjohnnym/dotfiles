@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 printf "\tloading .direnvrc pyenv\n"
 
-# shellcheck disable=2016
 function load_python() {
   # load pyenv shell environment
-  init_shell_environemnt pyenv
+  init_shell_environment pyenv
   # validate that pyenv is installed and visible in ${PATH}
   if [ ! "$(command -v pyenv)" ]; then
     echo "You need to install 'pyenv' before you can proceed"
@@ -14,16 +13,16 @@ function load_python() {
   if [ -f '.python-version' ]; then
     # ensure the python version is installed, if not, install it and
     # configure for compatibility with `auto-pyvenv`
-    if pyenv versions | grep -qE "$(cat .python-version)"; then
+    if ! pyenv versions | grep -qE "$(cat .python-version)"; then
       echo -n 'Python version not found, installing '
-      cat .python-version
-      pyenv install "$(cat .python-version)"
+      PYTHON_VERSION="$(cat .python-version)"
+      pyenv install "${PYTHON_VERSION}"
       # rehash pyenv due to new install
       pyenv rehash
       # initial pyenv
       eval "$(pyenv init -)"
       echo 'Upgrading pip to latest'
-      pyenv shell "$(cat .python-version)"
+      pyenv shell "${PYTHON_VERSION}"
       # upgrading setuptools in the event they are too old for `py2venv`
       pip install --upgrade pip setuptools
       if grep -qE '^2.' ./.python-version; then
@@ -34,13 +33,13 @@ function load_python() {
         DIFF=$(((EOL - NOW) / 86400))
         # Display warning of impending EOL date of python 2.x
         if ((DIFF > 0)); then
-          echo '#######################################################'
-          echo '#        __      ___   ___ _  _ ___ _  _  ___         #'
-          echo '#        \ \    / /_\ | _ \ \| |_ _| \| |/ __|        #'
-          echo '#         \ \/\/ / _ \|   / .` || || .` | (_ |        #'
-          echo '#          \_/\_/_/ \_\_|_\_|\_|___|_|\_|\___|        #'
-          echo '#                                                     #'
-          echo '#######################################################'
+          echo "#######################################################"
+          echo "#        __      ___   ___ _  _ ___ _  _  ___         #"
+          echo "#        \ \    / /_\ | _ \ \| |_ _| \| |/ __|        #"
+          echo "#         \ \/\/ / _ \|   / .' || || .' | (_ |        #"
+          echo "#          \_/\_/_/ \_\_|_\_|\_|___|_|\_|\___|        #"
+          echo "#                                                     #"
+          echo "#######################################################"
           echo
           echo "PYTHON 2.x is going End of Life in ${DIFF} days, you "
           echo "  should consider migrating to version 3.x soon."
@@ -50,31 +49,29 @@ function load_python() {
         pip install py2venv
       fi
     fi
-  fi
-  if [ ! "$DISABLE_VENV_BOOTSTRAP" ]; then
-    # if a .venv dir doesn't exist, create one based on the current activated
-    # python version
-    if [ ! -d '.venv' ]; then
-      echo -n 'Installing virtualenv for '
-      python -V
-      python -m venv .venv
+    if [ ! "$DISABLE_VENV_BOOTSTRAP" ]; then
+      # if a .venv dir doesn't exist, create one based on the current activated
+      # python version
+      if [ ! -d '.venv' ]; then
+        echo -n 'Installing virtualenv for '
+        python -V
+        python -m venv .venv
+      fi
     fi
+    # If a virutalenv is active, disable it before activing a new one.  This
+    # should reduce shells consuming more resources due to stacked environments.
+    if [ -n "$VIRTUAL_ENV" ]; then
+      echo "Active virtual environment found...${VIRTUAL_ENV}"
+      echo 'Unloading'
+      deactivate
+    fi
+    # source the venv dir
+    echo -n 'Loading virtualenv for '
+    python -V
+    # shellcheck source=/dev/null
+    source '.venv/bin/activate'
+    command -v python
   fi
-  # If a virutalenv is active, disable it before activing a new one.  This
-  # should reduce shells consuming more resources due to stacked environments.
-  if [ -n "$VIRTUAL_ENV" ]; then
-    echo "Active virtual environment found...${VIRTUAL_ENV}"
-    echo 'Unloading'
-    deactivate
-  fi
-  # source the venv dir
-  echo -n 'Loading virtualenv for '
-  python -V
-  # shellcheck source=/dev/null
-  source '.venv/bin/activate'
-  command -v python
 }
 
-if [ ! "$DISABLE_BOOTSTRAP" ] ; then
-  load_python
-fi
+load_python

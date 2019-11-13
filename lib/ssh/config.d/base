@@ -1,6 +1,4 @@
-Include config.d/*
-
-# Github Account
+# Github Accounts
 Host github.com
 	HostName github.com
 	User git

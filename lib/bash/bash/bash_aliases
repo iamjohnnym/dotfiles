@@ -15,4 +15,8 @@ alias fh='find ~ -type f -name'
 alias fr='find / -type f -name'
 alias updatedb='sudo /usr/libexec/locate.updatedb'
 alias whereami='curl ifconfig.co'
-alias 'netstat.osx'='echo "Proto Recv-Q Send-Q  Local Address          Foreign Address        (state)" && netstat -an | grep LISTEN'
+alias _now='date +%m_%d_%Y'
+alias 'netstat.osx'="echo \"Proto Recv-Q Send-Q  Local Address          \
+Foreign Address        (state)\" && netstat -an | grep LISTEN"
+alias gpasswd="openssl rand -base64 24 | pbcopy | \
+echo -n \"Copied Random Pass to Clipboard...\" | pbpaste"

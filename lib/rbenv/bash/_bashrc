@@ -2,4 +2,4 @@
 printf "\trbenv bashrc\n"
 
 # load rbenv shell environment
-init_shell_environemnt rbenv
+init_shell_environment rbenv

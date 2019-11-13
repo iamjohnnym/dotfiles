@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 printf "\tbashrc\n"
 
-declare -a _now=("$(date +%m_%d_%Y)")
-export _now
 
 # general
 export LC_ALL=en_US.UTF-8

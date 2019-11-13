@@ -1,53 +1,59 @@
 #!/usr/bin/env bash
 printf "\tloading .direnvrc rbenv\n"
 
-# shellcheck disable=2154,2143
+# shellcheck disable=2154
 function load_ruby() (
   # load rbenv shell environment
-  init_shell_environemnt rbenv
+  init_shell_environment rbenv
+  export GEM_HOME="$(pwd)"/.gems
+  export PATH="${GEM_HOME}":"${PATH}"
   # validate that rbenv is installed and visible in ${PATH}
   if [ ! "$(command -v rbenv)" ]; then
     echo "You need to install 'rbenv' before you can proceed"
     exit 1
   fi
-  # Add .gems to
-  if [ ! -f '.rbenv-gemsets' ]; then
-    touch .rbenv-gemsets
-  fi
-  test "$(grep -Fx '.gems' .rbenv-gemsets)" || echo '.gems' >>.rbenv-gemsets
   # check if ruby version is set in current dir
   if [ -f '.ruby-version' ]; then
+    # Add .gems to
+    if [ ! -f '.rbenv-gemsets' ]; then
+      if ! grep -q 'chef-workstation' .ruby-version; then
+        touch .rbenv-gemsets
+        test "$(grep -Fx '.gems' .rbenv-gemsets)" || echo '.gems' >> .rbenv-gemsets
+      fi
+    fi
     # Check if Gemfile.lock file exists and move it to a backup, allowing for a
     # fresh install.
     # NOTE:  Don't be silly, this should be arg driven because this isn't always
     #        a desired situation.
-    test -f Gemfile.lock && mv Gemfile.lock{,.bak-"$_now"}
+    # test -f Gemfile.lock && mv Gemfile.lock{,.bak-"$_now"}
     # ensure the ruby version is installed, if not, install it and
     # rbenv-gemset this stuff
-    if ! rbenv versions | grep -q "$(cat .ruby-version)" ; then
+    if ! rbenv versions | grep -q "$(cat .ruby-version)"; then
       echo -n 'Ruby version not found, installing '
-      cat .ruby-version
-      rbenv install "$(cat .ruby-version)"
+      RUBY_VERSION="$(cat .ruby-version)"
+      rbenv install "${RUBY_VERSION}"
       # rehash rbenv due to new install
       rbenv rehash
       # initial rbenv
       eval "$(rbenv init -)"
       echo 'installing bundler to latest'
-      rbenv shell "$(cat .ruby-version)"
-      gem install bundler
+      rbenv shell "${RUBY_VERSION}"
     fi
-  fi
-  if [ ! "$DISABLE_VENV_BOOTSTRAP" ]; then
-    if [ ! -d '.gems' ]; then
-      echo -n 'Installing rbenv-gemsets for '
+    if [ ! "$DISABLE_VENV_BOOTSTRAP" ]; then
+      if [ ! -d '.gems' ]; then
+        echo -n 'Installing rbenv-gemsets for '
+
+        rbenv version
+        #if grep -q chef-workstation .ruby-version; then
+        #  chef gem install bundler
+        #else
+        #  gem install bundler
+        #fi
+      fi
+      echo -n 'Loading ruby env for '
       rbenv version
-      gem install bundler
     fi
   fi
-  echo -n 'Loading ruby env for '
-  rbenv versions
 )
 
-if [ ! "$DISABLE_BOOTSTRAP" ] ; then
-  load_ruby
-fi
+load_ruby

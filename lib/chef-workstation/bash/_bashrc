@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+printf "\tchef-workstation bashrc\n"
+
+
+export OPSCODE_USER=john_martin

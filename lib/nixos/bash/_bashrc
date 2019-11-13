@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+printf "\tnixos bashrc\n"
+
+# load nixos shell environment
+
+# shellcheck disable=SC1090
+source "/Users/${USER}/.nix-profile/etc/profile.d/nix.sh"

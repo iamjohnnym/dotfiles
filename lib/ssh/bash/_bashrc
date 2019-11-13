@@ -7,7 +7,9 @@ if ! grep -Fxq "Include config.d/*" ~/.ssh/config
 then
     echo "Include config.d/*" >> ~/.ssh/config
 fi
-if ! grep -Fxq "Include ${DOTFILE_PATH}/config.d/*" ~/.ssh/config
+if ! grep -Fxq "Include ${DOTFILE_PATH}/lib/ssh/config.d/*" ~/.ssh/config
 then
-    echo "Include ${DOTFILE_PATH}/config.d/*" >> ~/.ssh/config
+    echo "Include ${DOTFILE_PATH}/lib/ssh/config.d/*" >> ~/.ssh/config
 fi
+
+rawr=

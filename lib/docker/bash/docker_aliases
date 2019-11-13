@@ -7,7 +7,7 @@ alias di='docker images'
 alias 'docker.ssh'='docker-machine ssh default'  # or, alias 'ssh.docker'="echo 'password is \`tcuser\`'; ssh docker@$(docker-machine ip default)"
 alias 'docker.ls'="docker ps --format 'table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Names}}\t{{.Ports}}'"
 
-alias 'docker.psql.start'='docker run --name postgres -p 5432:5432 --detach kiasaki/alpine-postgres:9.5'
+alias 'docker.psql.start'='docker run --name postgres -p 5432:5432 --detach kiasaki/alpine-postgres:11.5'
 alias 'docker.psql.stop'='docker rm postgres'
 
 alias 'docker.stop.all'='docker_stop_all'
